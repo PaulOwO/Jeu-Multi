@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Player1 : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class Player1 : MonoBehaviour
     [SerializeField] SpriteRenderer Playersprite_;
     private const float MoveSpeed_ = 1.0f;
     private const float Deadzone_ = 0.1f;
-    private const float Jumpspeed_ = 2.0f;
+    private const float Jumpspeed_ = 5.0f;
     private const int Jumpcountmax_ = 1;
     private int Jumpcountcurrent_ = 0;
     private State Currentstate_;
@@ -51,6 +52,34 @@ public class Player1 : MonoBehaviour
         {
             Flip();
         }
+
+        switch (Currentstate_)
+        {
+            case State.IDLE:
+                if(Mathf.Abs(Input.GetAxis("Horizontal")) > Deadzone_)
+                {
+                    ChangeState(State.WALK);
+                }
+                if (Input.GetButtonDown("JUMP"))
+                {
+                    ChangeState(State.JUMP);
+                }
+                break;
+            case State.WALK:
+                if(Input.GetAxis("Horizontal") > -Deadzone_ && Input.GetAxis("Horizontal") < Deadzone_)
+                {
+                    ChangeState(State.IDLE);
+                }
+                break;
+            case State.JUMP:
+                if (Input.GetAxis("Horizontal") > -Deadzone_ && Input.GetAxis("Horizontal") < Deadzone_)
+                {
+                    ChangeState(State.IDLE);
+                }
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
     }
 
     private void Jump()
@@ -68,5 +97,24 @@ public class Player1 : MonoBehaviour
     {
         Playersprite_.flipX = !Playersprite_.flipX;
         Facingright_ = !Facingright_;
+    }
+
+    void ChangeState(State state)
+    {
+        switch (state)
+        {
+            case State.IDLE:
+                Playeranim_.Play("Idle");
+                break;
+            case State.WALK:
+                Playeranim_.Play("Walk");
+                break;
+            case State.JUMP:
+                Playeranim_.Play("Jump");
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(state), state, null);
+        }
+        Currentstate_ = state;
     }
 }

@@ -105,10 +105,10 @@ InputManager:
     m_Name: JUMP2
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: 
+    negativeButton: up
     positiveButton: up
-    altNegativeButton: 
-    altPositiveButton: 
+    altNegativeButton: up
+    altPositiveButton: up
     gravity: 0
     dead: 0
     sensitivity: 0.1

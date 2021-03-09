@@ -15,7 +15,7 @@ public class Player2 : MonoBehaviour
     [SerializeField] SpriteRenderer Playersprite_;
     private const float MoveSpeed_ = 1.0f;
     private const float Deadzone_ = 0.1f;
-    private const float Jumpspeed_ = 2.0f;
+    private const float Jumpspeed_ = 6.0f;
     private const int Jumpcountmax_ = 1;
     private int Jumpcountcurrent_ = 0;
     private State Currentstate_;
